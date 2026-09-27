@@ -139,7 +139,7 @@ class RegistrationFlowTests(TestCase):
         response = self.client.get(reverse("home"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Freshers 2025 recap")
+        self.assertContains(response, "Watch video")
         self.assertContains(response, "https://example.com/freshers-2025")
         self.assertNotContains(response, "Instagram reel")
 
