@@ -42,7 +42,20 @@ When DEBUG is enabled, confirmation emails are printed to the runserver terminal
 
 ## Production deployment
 
-Use PostgreSQL. Production startup deliberately fails unless `DJANGO_DEBUG=False`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_SECRET_KEY`, and `POSTGRES_DB` are configured. Set the remaining PostgreSQL credentials and `POSTGRES_SSLMODE=require` if required by your provider. Configure SMTP (`EMAIL_HOST`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, and `DEFAULT_FROM_EMAIL`) so verified attendees receive their tickets. Set `DJANGO_CSRF_TRUSTED_ORIGINS` to comma-separated HTTPS origins where needed.
+### Render
+
+The repository includes a Render Blueprint in `render.yaml`. It creates a small paid Django web service and a 1 GB persistent disk for admin-uploaded media, using your existing Neon PostgreSQL database. **Applying the Blueprint creates billable Render resources.** The free Render tier is unsuitable for this CMS: its filesystem is ephemeral and cannot retain uploaded media.
+
+1. Push the project, including `render.yaml`, to the connected GitHub repository's `main` branch.
+2. In Render, create a **New Blueprint Instance**, connect `kunalSirsat03/Freshers`, and review the paid web service and media disk before applying.
+3. When prompted for `DATABASE_URL`, enter the Neon connection string as a secret. Use the direct (non-pooled) Neon connection for reliable Django migrations, and ensure it includes `sslmode=require`. Do not commit or share this URL.
+4. The Blueprint builds static files, runs migrations before deploy, creates secure Django and webhook secrets, and seeds the demo gallery/videos once. `EVENT_REGISTRATION_URL` initializes the event's Google Form link when the event settings row is first created.
+5. After the first deploy, open the service Shell and run `python manage.py createsuperuser`. Then visit `https://YOUR-SERVICE.onrender.com/admin/` to edit content.
+6. Configure Google Sheets Apps Script with the generated `GOOGLE_FORMS_WEBHOOK_TOKEN` and the public `/api/google-form/responses/` URL if response sync is needed.
+
+Render supplies `RENDER_EXTERNAL_HOSTNAME`; Django uses it for `ALLOWED_HOSTS` and trusted HTTPS origins. The media disk keeps uploaded posters and gallery files across deploys. Database registration rows are new on Render and are not copied from local SQLite.
+
+Use PostgreSQL. Production startup deliberately fails unless `DJANGO_DEBUG=False`, a secure `DJANGO_SECRET_KEY`, and either `DATABASE_URL` or `POSTGRES_DB` are configured. Configure SMTP (`EMAIL_HOST`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, and `DEFAULT_FROM_EMAIL`) so verified attendees receive their tickets. Set `DJANGO_CSRF_TRUSTED_ORIGINS` for additional custom HTTPS origins when needed.
 
 Before serving traffic:
 

@@ -38,7 +38,10 @@ from .models import (
 
 
 def _event_settings():
-    return EventSettings.objects.get_or_create(pk=1)[0]
+    return EventSettings.objects.get_or_create(
+        pk=1,
+        defaults={"registration_url": settings.EVENT_REGISTRATION_URL},
+    )[0]
 
 
 def _send_confirmed_tickets(request, registration_id):

@@ -1,21 +1,22 @@
 from pathlib import Path
 import os
+import dj_database_url
+from urllib.parse import unquote, urlparse
 
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
-DEBUG = os.environ.get("DJANGO_DEBUG", "True").strip().lower() in {"1", "true", "yes"}
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "local-development-only-insecure-key")
-if not DEBUG and SECRET_KEY == "local-development-only-insecure-key":
-    raise RuntimeError("Set DJANGO_SECRET_KEY to a secure value when DEBUG is disabled.")
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-    if host.strip()
-]
-if not DEBUG and not os.environ.get("DJANGO_ALLOWED_HOSTS"):
-    raise RuntimeError("Set DJANGO_ALLOWED_HOSTS to your production hostname(s).")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ["*"]
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "")
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+if not DEBUG and not ALLOWED_HOSTS:
+    raise RuntimeError("Set DJANGO_ALLOWED_HOSTS or deploy on Render with its hostname configured.")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,7 +56,18 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = "freshers_project.wsgi.application"
 
-if os.environ.get("POSTGRES_DB"):
+DATABASE_URL = os.environ.get("DATABASE_URL", "")
+if DATABASE_URL:
+    parsed_database_url = urlparse(DATABASE_URL)
+    if parsed_database_url.scheme not in {"postgres", "postgresql"}:
+        raise RuntimeError("DATABASE_URL must use the postgres:// or postgresql:// scheme.")
+    DATABASES = {
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+    )
+}
+elif os.environ.get("POSTGRES_DB"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -87,7 +99,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = Path(os.environ.get("MEDIA_ROOT", BASE_DIR / "media"))
+EVENT_REGISTRATION_URL = os.environ.get("EVENT_REGISTRATION_URL", "")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SECURE_SSL_REDIRECT = os.environ.get(
     "DJANGO_SECURE_SSL_REDIRECT", "False" if DEBUG else "True"
@@ -105,6 +118,18 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+if RENDER_EXTERNAL_HOSTNAME:
+    render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+if not DEBUG:
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 EMAIL_BACKEND = os.environ.get(
     "DJANGO_EMAIL_BACKEND",
