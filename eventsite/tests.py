@@ -143,6 +143,14 @@ class RegistrationFlowTests(TestCase):
         self.assertContains(response, "https://example.com/freshers-2025")
         self.assertNotContains(response, "Instagram reel")
 
+    def test_past_year_link_uses_youtube_thumbnail_for_short_links(self):
+        link = PastYearLink.objects.create(
+            title="Dance Reel 1",
+            url="https://youtube.com/shorts/in6gm1NFqow?si=rASaNjGlQz1jkcOB",
+        )
+
+        self.assertIn("img.youtube.com/vi/in6gm1NFqow/hqdefault.jpg", link.thumbnail_url)
+
     def test_public_event_status_does_not_disclose_capacity_or_registration_totals(self):
         response = self.client.get(reverse("event_status"))
         self.assertEqual(response.status_code, 200)

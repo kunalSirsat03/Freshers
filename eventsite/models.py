@@ -187,6 +187,22 @@ class PastYearLink(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def thumbnail_url(self):
+        parsed = urlparse(self.url)
+        host = parsed.netloc.lower().split(":", 1)[0]
+        if host in {"youtu.be", "www.youtu.be"}:
+            video_id = parsed.path.strip("/").split("/")[0]
+        elif host in {"youtube.com", "www.youtube.com", "m.youtube.com"}:
+            video_id = parse_qs(parsed.query).get("v", [""])[0]
+            if not video_id and parsed.path.startswith(("/embed/", "/shorts/")):
+                video_id = parsed.path.split("/")[2]
+        else:
+            return ""
+        if not video_id:
+            return ""
+        return f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
+
 
 class GoogleFormSubmission(models.Model):
     external_id = models.CharField(max_length=200, unique=True)
