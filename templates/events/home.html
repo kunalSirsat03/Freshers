@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<header class="site-header">
+  <div class="header-inner">
+    <a class="wordmark" href="#top" aria-label="Unofficial Freshers home">
+      <span class="wordmark-mark">UF<span>'26</span></span>
+      <span class="wordmark-name">Unofficial<br>Freshers</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+      <a href="#experience">The night</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#faq">FAQs</a>
+      {% if google_form_url %}
+        <a class="button button-small" href="{{ google_form_url }}" target="_blank" rel="noopener noreferrer">Register now <span aria-hidden="true">↗</span></a>
+      {% else %}
+        <a class="button button-small" href="#registration">Register now <span aria-hidden="true">↗</span></a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="event-title">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <div class="hero-inner page-width">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> The class of '26, together at last</p>
+        <h1 id="event-title">Make room<br>for <em>legendary.</em></h1>
+        <p class="hero-description">One night for new faces, old friends, loud music and the stories you'll still be telling next semester.</p>
+        <div class="hero-facts" aria-label="Event information">
+          <div class="hero-fact"><span class="fact-icon" aria-hidden="true">▦</span><span><strong>{{ event_date }}</strong><small>{{ event_time }}</small></span></div>
+          <div class="hero-fact"><span class="fact-icon" aria-hidden="true">⌖</span><span><strong>{{ venue }}</strong><small>Good people. One dance floor.</small></span></div>
+          <div class="hero-fact"><span class="fact-icon price-icon" aria-hidden="true">₹</span><span><strong>₹{{ ticket_price }}</strong><small>per person</small></span></div>
+        </div>
+        <div class="hero-actions" id="registration">
+          {% if google_form_url %}
+            <a class="button button-primary" href="{{ google_form_url }}" target="_blank" rel="noopener noreferrer">Register now <span aria-hidden="true">↗</span></a>
+          {% else %}
+            <a class="button button-primary" href="#registration-note">Register now <span aria-hidden="true">↗</span></a>
+          {% endif %}
+          <a class="text-link" href="#experience">Get to know the night <span aria-hidden="true">↓</span></a>
+        </div>
+        {% if not google_form_url %}
+          <p class="config-note" id="registration-note">Registration link coming soon.</p>
+        {% endif %}
+        <div class="countdown" data-countdown="2026-10-10T18:00:00+05:30" aria-label="Countdown to the event">
+          <span class="countdown-label">The night begins in</span>
+          <div class="countdown-units">
+            <span><strong data-days>000</strong><small>days</small></span>
+            <span><strong data-hours>00</strong><small>hours</small></span>
+            <span><strong data-minutes>00</strong><small>mins</small></span>
+            <span><strong data-seconds>00</strong><small>secs</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="poster-frame">
+          <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="A packed dance floor lit for a night of music" fetchpriority="high">
+          <div class="poster-wash"></div>
+          <div class="poster-topline"><span>ONE NIGHT ONLY</span><span>10.10.26</span></div>
+          <div class="poster-title"><span>UNOFFICIAL</span><strong>FRESHERS</strong><span>YOUR NIGHT STARTS HERE</span></div>
+          <div class="poster-bottom"><span>BONVIVANT</span><span>EST. 2026</span></div>
+        </div>
+        <span class="hero-stamp" aria-hidden="true">A night<br>to remember</span>
+      </div>
+    </div>
+    <div class="hero-bottom page-width"><span>01 / 05</span><span>Scroll for the good stuff</span><span class="scroll-line" aria-hidden="true"></span></div>
+  </section>
+
+  <section class="experience section-pad" id="experience">
+    <div class="page-width">
+      <div class="section-intro">
+        <p class="eyebrow">Not just another party</p>
+        <h2>Show up as strangers.<br><em>Leave as the story.</em></h2>
+        <p class="section-copy">A proper welcome to the year ahead: a little ceremony, a lot of music, and a room full of people you'll be glad you met.</p>
+      </div>
+      <div class="experience-grid">
+        <article class="experience-item experience-featured">
+          <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="DJ performing beneath vivid stage lights" loading="lazy">
+          <span class="image-index">01</span>
+          <div><span class="item-kicker">Find your rhythm</span><h3>Lights down.<br>Volume up.</h3></div>
+        </article>
+        <article class="experience-item">
+          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="A beautifully set dinner table ready for guests" loading="lazy">
+          <span class="image-index">02</span>
+          <div><span class="item-kicker">Good things, served</span><h3>Save a little<br>room for dinner.</h3></div>
+        </article>
+        <article class="experience-item experience-short">
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Friends celebrating together at an evening event" loading="lazy">
+          <span class="image-index">03</span>
+          <div><span class="item-kicker">Your people are here</span><h3>Make the<br>first memory.</h3></div>
+        </article>
+      </div>
+      <div class="dress-note"><span class="dress-mark" aria-hidden="true">✳</span><p><strong>Dress for the occasion.</strong> Western formal or party wear. Make it yours, and make it comfortable enough to dance in.</p></div>
+    </div>
+  </section>
+
+  <section class="schedule-section section-pad" id="schedule">
+    <div class="page-width schedule-layout">
+      <div class="schedule-heading">
+        <p class="eyebrow">A little preview</p>
+        <h2>Here's how<br>the night <em>unfolds.</em></h2>
+        <p>Times are a guide. The best parts tend to happen in between.</p>
+        <span class="schedule-mark" aria-hidden="true">UF<br>26</span>
+      </div>
+      <ol class="schedule-list">
+        {% for time, title, description in schedule %}
+          <li class="schedule-row">
+            <time>{{ time }}</time>
+            <div><h3>{{ title }}</h3><p>{{ description }}</p></div>
+            <span class="schedule-arrow" aria-hidden="true">↗</span>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section class="gallery-section section-pad" id="gallery">
+    <div class="page-width">
+      <div class="gallery-heading"><div><p class="eyebrow">The feeling of it</p><h2>Good nights<br>look like <em>this.</em></h2></div><span>Lights. Laughter. One more song.</span></div>
+      <div class="gallery-strip">
+        <figure><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Crowd enjoying an outdoor live music event" loading="lazy"><figcaption>THE ARRIVAL</figcaption></figure>
+        <figure><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Festival crowd with hands raised toward the stage" loading="lazy"><figcaption>THE MOMENT</figcaption></figure>
+        <figure><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Friends dancing together at a concert" loading="lazy"><figcaption>THE AFTERGLOW</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section section-pad" id="faq">
+    <div class="page-width faq-layout">
+      <div class="faq-heading"><p class="eyebrow">Before you go</p><h2>A few<br>good <em>answers.</em></h2><p>Couldn't find what you need? The organizers can help through the registration form.</p></div>
+      <div class="faq-list">
+        {% for question, answer in faqs %}
+          <details class="faq-item">
+            <summary><span>{{ question }}</span><span class="faq-plus" aria-hidden="true"></span></summary>
+            <p>{{ answer }}</p>
+          </details>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="closing-cta">
+    <div class="closing-inner page-width">
+      <p class="eyebrow">Saturday · 10 October 2026 · Bonvivant</p>
+      <h2>Be there for<br><em>the beginning.</em></h2>
+      <p>₹{{ ticket_price }} per person</p>
+      {% if google_form_url %}
+        <a class="button button-light" href="{{ google_form_url }}" target="_blank" rel="noopener noreferrer">Register now <span aria-hidden="true">↗</span></a>
+      {% else %}
+        <a class="button button-light" href="#registration-note">Register now <span aria-hidden="true">↗</span></a>
+        <p class="closing-note">Registration link coming soon.</p>
+      {% endif %}
+      <span class="closing-mark" aria-hidden="true">UF</span>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="page-width footer-inner">
+    <a class="wordmark footer-wordmark" href="#top"><span class="wordmark-mark">UF<span>'26</span></span><span class="wordmark-name">Unofficial<br>Freshers</span></a>
+    <p>One night. A whole new chapter.</p>
+    <div class="footer-meta"><span>10 OCT 2026</span><span>BONVIVANT</span>{% if event_contact_email %}<a href="mailto:{{ event_contact_email }}">CONTACT</a>{% endif %}</div>
+  </div>
+</footer>
+
+{% if google_form_url %}
+  <div class="mobile-register">
+    <span><strong>₹{{ ticket_price }}</strong><small>per person</small></span>
+    <a class="button button-primary" href="{{ google_form_url }}" target="_blank" rel="noopener noreferrer">Register now <span aria-hidden="true">↗</span></a>
+  </div>
+{% else %}
+  <div class="mobile-register">
+    <span><strong>₹{{ ticket_price }}</strong><small>per person</small></span>
+    <a class="button button-primary" href="#registration-note">Register now <span aria-hidden="true">↗</span></a>
+  </div>
+{% endif %}
+{% endblock %}
