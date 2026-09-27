@@ -172,6 +172,22 @@ class EventContact(models.Model):
         return self.name
 
 
+class PastYearLink(models.Model):
+    title = models.CharField(max_length=180)
+    url = models.URLField()
+    description = models.TextField(blank=True)
+    sort_order = models.PositiveIntegerField(default=0)
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["sort_order", "pk"]
+        verbose_name = "past year link"
+        verbose_name_plural = "past year links"
+
+    def __str__(self):
+        return self.title
+
+
 class GoogleFormSubmission(models.Model):
     external_id = models.CharField(max_length=200, unique=True)
     submitted_at = models.DateTimeField(null=True, blank=True)

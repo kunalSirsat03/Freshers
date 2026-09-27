@@ -12,6 +12,7 @@ from eventsite.models import (
     EventVideo,
     GalleryImage,
     GoogleFormSubmission,
+    PastYearLink,
     Payment,
     Registration,
     ScheduleItem,
@@ -121,6 +122,26 @@ class RegistrationFlowTests(TestCase):
         self.assertContains(response, "View venue map")
         self.assertContains(response, 'id="last-year"')
         self.assertContains(response, "Previous-edition photos and video will appear here.")
+
+    def test_public_home_renders_past_year_links(self):
+        PastYearLink.objects.create(
+            title="Freshers 2025 recap",
+            url="https://example.com/freshers-2025",
+            description="A quick look at the previous edition.",
+        )
+        PastYearLink.objects.create(
+            title="Instagram reel",
+            url="https://instagram.com/freshers2025",
+            description="Highlights reel from last year.",
+            is_published=False,
+        )
+
+        response = self.client.get(reverse("home"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Freshers 2025 recap")
+        self.assertContains(response, "https://example.com/freshers-2025")
+        self.assertNotContains(response, "Instagram reel")
 
     def test_public_event_status_does_not_disclose_capacity_or_registration_totals(self):
         response = self.client.get(reverse("event_status"))

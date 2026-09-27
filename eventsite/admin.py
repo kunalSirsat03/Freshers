@@ -7,6 +7,7 @@ from .models import (
     EventVideo,
     GoogleFormSubmission,
     GalleryImage,
+    PastYearLink,
     Payment,
     Registration,
     ScheduleItem,
@@ -77,6 +78,14 @@ class EventContactAdmin(admin.ModelAdmin):
     list_editable = ("sort_order", "is_published")
     list_filter = ("is_published",)
     search_fields = ("name", "role", "phone", "email")
+
+
+@admin.register(PastYearLink)
+class PastYearLinkAdmin(admin.ModelAdmin):
+    list_display = ("title", "url", "sort_order", "is_published")
+    list_editable = ("sort_order", "is_published")
+    list_filter = ("is_published",)
+    search_fields = ("title", "description", "url")
 
 
 @admin.register(GoogleFormSubmission)

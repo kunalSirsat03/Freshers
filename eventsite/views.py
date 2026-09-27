@@ -30,6 +30,7 @@ from .models import (
     EventVideo,
     GoogleFormSubmission,
     GalleryImage,
+    PastYearLink,
     Payment,
     Registration,
     ScheduleItem,
@@ -106,6 +107,7 @@ def home(request):
             "previous_videos": EventVideo.objects.filter(
                 is_published=True, edition=EventVideo.EDITION_PREVIOUS
             ),
+            "past_year_links": PastYearLink.objects.filter(is_published=True),
             "schedule": ScheduleItem.objects.filter(is_published=True),
             "rules": EventRule.objects.filter(is_published=True),
             "faqs": EventFAQ.objects.filter(is_published=True),
