@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-local-development-only")
 DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
-ALLOWED_HOSTS = [host.strip() for host in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if host.strip()]
+ALLOWED_HOSTS = ["*"]
 GOOGLE_FORM_URL = os.getenv("GOOGLE_FORM_URL", "https://forms.gle/rT1QgLVCPCMPLYyv9").strip()
 EVENT_CONTACT_EMAIL = os.getenv("EVENT_CONTACT_EMAIL", "kunal3work@gmail.com").strip()
 
