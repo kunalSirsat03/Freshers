@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organizer dashboard · Unofficial Freshers</title>
+  <style>
+    :root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#191923;background:#f5f6fa;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.wrap{width:min(1200px,calc(100% - 32px));margin:auto}.top{background:#fff;border-bottom:1px solid #e7e8ef}.top .wrap{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:800;font-size:19px}.brand span{color:#e50938}.links{display:flex;gap:16px;align-items:center}.links a{color:#555;text-decoration:none;font-weight:650}.button,button{border:0;border-radius:9px;padding:10px 14px;background:#e50938;color:white;font:inherit;font-weight:750;text-decoration:none;cursor:pointer}.button-muted{background:#eeeef3;color:#252530}.content{padding:30px 0 60px}h1{margin:0;font-size:clamp(26px,4vw,38px)}.sub{color:#777;margin:6px 0 24px}.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.stat{background:#fff;border:1px solid #ebebf1;border-radius:13px;padding:17px}.stat small{display:block;color:#777;font-weight:650}.stat strong{display:block;font-size:26px;margin-top:6px}.toolbar,.panel{background:#fff;border:1px solid #ebebf1;border-radius:13px;padding:18px;margin-top:18px}.toolbar form{display:flex;gap:10px;flex-wrap:wrap}.toolbar input,.toolbar select,.checkin input{border:1px solid #d9dbe4;border-radius:8px;padding:10px 12px;font:inherit}.toolbar input{flex:1;min-width:200px}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{text-align:left;padding:13px 11px;border-bottom:1px solid #eeeef2;vertical-align:top}th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#777}td{font-size:14px}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff3d6;color:#91620b;font-size:12px;font-weight:800}.badge.VERIFIED{background:#e0f7ed;color:#087443}.badge.REJECTED{background:#ffeaec;color:#b42338}.actions{display:flex;gap:6px}.actions form{display:inline}.actions button{padding:7px 9px;font-size:12px}.actions .reject{background:#f1f1f5;color:#4a4a55}.message{padding:11px 14px;background:#edf8f1;border-radius:9px;margin:0 0 10px}.bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px}.checkin{display:flex;gap:10px;flex-wrap:wrap}.checkin input{flex:1;min-width:220px}.hint{color:#777;font-size:13px;margin-bottom:0}.empty{text-align:center;color:#777;padding:24px}@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.wrap{width:calc(100% - 22px)}.top .wrap{min-height:62px}.links{gap:8px}.links a{font-size:13px}.grid{grid-template-columns:repeat(2,1fr)}.stat{padding:13px}.stat strong{font-size:22px}.bottom{grid-template-columns:1fr}.content{padding-top:22px}}
+  </style>
+</head>
+<body>
+<header class="top"><div class="wrap"><div class="brand"><span>UF</span> Organizer</div><nav class="links"><a href="{% url 'home' %}">Public site</a><a href="{% url 'google-form-responses' %}">Form responses</a><a href="{% url 'admin:eventsite_eventsettings_changelist' %}">Event content</a><a href="{% url 'admin:index' %}">Django admin</a><a href="{% url 'admin:logout' %}">Sign out</a></nav></div></header>
+<main class="wrap content">
+  <h1>Event dashboard</h1><p class="sub">{{ event.title }} · {{ event.event_date|date:"j F Y, g:i A" }} · {{ event.venue }}</p>
+  {% for message in messages %}<p class="message">{{ message }}</p>{% endfor %}
+  <section class="grid" aria-label="Registration summary">
+    <div class="stat"><small>Registrations</small><strong>{{ total_registrations }}</strong></div>
+    <div class="stat"><small>Confirmed bookings</small><strong>{{ confirmed_count }}</strong></div>
+    <div class="stat"><small>Pending payments</small><strong>{{ pending_count }}</strong></div>
+    <div class="stat"><small>Rejected payments</small><strong>{{ rejected_count }}</strong></div>
+    <div class="stat"><small>Seats reserved</small><strong>{{ booked }} / {{ event.capacity }}</strong></div>
+    <div class="stat"><small>Revenue verified</small><strong>₹{{ revenue }}</strong></div>
+  </section>
+  <section class="toolbar">
+    <form method="get" action="{% url 'organizer-dashboard' %}">
+      <input name="q" value="{{ query }}" placeholder="Search ID, UTR, attendee, email" aria-label="Search registrations">
+      <input type="date" name="date_from" value="{{ date_from }}" aria-label="From date">
+      <input type="date" name="date_to" value="{{ date_to }}" aria-label="To date">
+      <select name="status" aria-label="Filter payment status"><option value="">All payment statuses</option><option value="PENDING" {% if selected_status == 'PENDING' %}selected{% endif %}>Pending</option><option value="VERIFIED" {% if selected_status == 'VERIFIED' %}selected{% endif %}>Verified</option><option value="REJECTED" {% if selected_status == 'REJECTED' %}selected{% endif %}>Rejected</option></select>
+      <button type="submit">Filter</button><a class="button button-muted" href="{% url 'export-registrations' %}">Export CSV</a>
+    </form>
+  </section>
+  <section class="panel"><div class="table-scroll"><table><thead><tr><th>Registration / date</th><th>Attendees</th><th>Amount / UTR</th><th>Status</th><th>Review</th></tr></thead><tbody>
+    {% for registration in registrations %}<tr><td><strong>{{ registration.registration_id }}</strong><br>{{ registration.created_at|date:"j M Y, g:i A" }}</td><td>{% for ticket in registration.tickets.all %}{{ ticket.attendee_name }}{% if registration.payment.status == 'VERIFIED' %} · <a href="{% url 'ticket-detail' ticket.qr_token %}" target="_blank" rel="noopener">ticket</a>{% endif %}{% if not forloop.last %}<br>{% endif %}{% endfor %}</td><td>₹{{ registration.payment.amount }}<br><small>{{ registration.payment.utr_number }}</small></td><td><span class="badge {{ registration.payment.status }}">{{ registration.payment.get_status_display }}</span></td><td>{% if registration.payment.status == 'PENDING' %}<div class="actions"><form method="post" action="{% url 'review-payment' registration.registration_id 'verify' %}">{% csrf_token %}<button>Verify</button></form><form method="post" action="{% url 'review-payment' registration.registration_id 'reject' %}">{% csrf_token %}<button class="reject">Reject</button></form></div>{% else %}<small>{% if registration.payment.verified_by %}Reviewed by {{ registration.payment.verified_by.username }}{% endif %}</small>{% endif %}</td></tr>
+    {% empty %}<tr><td colspan="5" class="empty">No registrations match these filters.</td></tr>{% endfor %}
+  </tbody></table></div></section>
+  <div class="bottom">
+    <section class="panel"><h2>Door check-in</h2><form class="checkin" method="post" action="{% url 'check-in-ticket' %}">{% csrf_token %}<input name="qr_token" required placeholder="Scan or paste ticket QR token" aria-label="Ticket QR token"><button type="submit">Check in</button></form><p class="hint">{{ checked_in_count }} ticket(s) checked in. Only verified tickets can be checked in; repeated scans are rejected.</p></section>
+    <section class="panel"><h2>Capacity</h2><p>{{ remaining_capacity }} seats remain out of {{ event.capacity }}.</p><p class="hint">Pending bookings reserve seats. Rejected bookings release capacity.</p></section>
+  </div>
+</main>
+</body>
+</html>
