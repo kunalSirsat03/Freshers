@@ -44,12 +44,12 @@
         <h1 class="hero-title">{{ event.title|default:"Unofficial" }}<small>FRESHERS</small></h1>
         <p class="hero-subtitle">A party everyone remembers.</p>
 
-        <div class="hero-meta" aria-label="Event information">
-          <div class="meta-card"><strong>13</strong><span>Days</span></div>
-          <div class="meta-card"><strong>19</strong><span>Hours</span></div>
-          <div class="meta-card"><strong>15</strong><span>Minutes</span></div>
-          <div class="meta-card"><strong>39</strong><span>Seconds</span></div>
-        </div>
+          <div class="countdown" aria-label="Countdown to the event">
+            <div class="countdown-unit"><b id="countDays">--</b><small>Days</small></div>
+            <div class="countdown-unit"><b id="countHours">--</b><small>Hours</small></div>
+            <div class="countdown-unit"><b id="countMinutes">--</b><small>Minutes</small></div>
+            <div class="countdown-unit"><b id="countSeconds">--</b><small>Seconds</small></div>
+          </div>
 
         <div class="ticket-panel" aria-label="Ticket detail">
           <span class="ticket-price">?{{ event.ticket_price }}</span>
