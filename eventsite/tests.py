@@ -57,8 +57,25 @@ class RegistrationFlowTests(TestCase):
             caption="Welcome night",
             featured=True,
         )
+        GalleryImage.objects.create(
+            image_url="https://images.unsplash.com/photo-1514525253161-7a46d19cd819",
+            caption="Previous party memory",
+            collection=GalleryImage.COLLECTION_PREVIOUS,
+        )
+        GalleryImage.objects.create(
+            image_url="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3",
+            caption="Venue photo for Freshers 2026",
+            collection=GalleryImage.COLLECTION_VENUE,
+        )
         EventVideo.objects.create(
-            title="Event teaser", url="https://youtu.be/M7lc1UVf-VE"
+            title="Previous party video",
+            url="https://youtu.be/M7lc1UVf-VE",
+            edition=EventVideo.EDITION_PREVIOUS,
+        )
+        EventVideo.objects.create(
+            title="Unclassified promo video",
+            url="https://youtu.be/aqz-KE-bpKQ",
+            edition=EventVideo.EDITION_PROMO,
         )
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
@@ -69,8 +86,11 @@ class RegistrationFlowTests(TestCase):
         self.assertContains(response, schedule.title)
         self.assertContains(response, "Welcome night")
         self.assertContains(response, "https://images.unsplash.com/photo-1501386761578-eac5c94b800a")
-        self.assertContains(response, "Event teaser")
+        self.assertContains(response, "Previous party memory")
+        self.assertContains(response, "Previous party video")
+        self.assertContains(response, "Venue photo for Freshers 2026")
         self.assertContains(response, "youtube-nocookie.com/embed/M7lc1UVf-VE")
+        self.assertNotContains(response, "Unclassified promo video")
         self.assertNotContains(response, unpublished_faq.question)
         self.assertContains(response, 'id="countDays"')
         self.assertContains(response, "11:00 AM to 6:00 PM")
@@ -92,6 +112,15 @@ class RegistrationFlowTests(TestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, str(self.event.capacity))
+
+    def test_homepage_shows_venue_and_previous_edition_empty_state(self):
+        response = self.client.get(reverse("home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="venue"')
+        self.assertContains(response, self.event.venue)
+        self.assertContains(response, "View venue map")
+        self.assertContains(response, 'id="last-year"')
+        self.assertContains(response, "Previous-edition photos and video will appear here.")
 
     def test_public_event_status_does_not_disclose_capacity_or_registration_totals(self):
         response = self.client.get(reverse("event_status"))

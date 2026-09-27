@@ -33,17 +33,17 @@ class EventSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ("caption", "featured", "sort_order", "is_published")
+    list_display = ("caption", "collection", "featured", "sort_order", "is_published")
     list_editable = ("featured", "sort_order", "is_published")
-    list_filter = ("featured", "is_published")
+    list_filter = ("collection", "featured", "is_published")
     search_fields = ("caption", "alt_text")
 
 
 @admin.register(EventVideo)
 class EventVideoAdmin(admin.ModelAdmin):
-    list_display = ("title", "source_type", "sort_order", "is_published")
+    list_display = ("title", "edition", "source_type", "sort_order", "is_published")
     list_editable = ("sort_order", "is_published")
-    list_filter = ("source_type", "is_published")
+    list_filter = ("edition", "source_type", "is_published")
     search_fields = ("title",)
 
 

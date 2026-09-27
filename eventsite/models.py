@@ -31,10 +31,22 @@ class EventSettings(models.Model):
 
 
 class GalleryImage(models.Model):
+    COLLECTION_GENERAL = "GENERAL"
+    COLLECTION_PREVIOUS = "PREVIOUS"
+    COLLECTION_VENUE = "VENUE"
+    COLLECTION_CHOICES = [
+        (COLLECTION_GENERAL, "General gallery"),
+        (COLLECTION_PREVIOUS, "Last year's party"),
+        (COLLECTION_VENUE, "This year's venue"),
+    ]
+
     image = models.ImageField(upload_to="gallery/", blank=True)
     image_url = models.URLField(blank=True)
     caption = models.CharField(max_length=180, blank=True)
     alt_text = models.CharField(max_length=180, blank=True)
+    collection = models.CharField(
+        max_length=12, choices=COLLECTION_CHOICES, default=COLLECTION_GENERAL
+    )
     sort_order = models.PositiveIntegerField(default=0)
     featured = models.BooleanField(default=False)
     is_published = models.BooleanField(default=True)
@@ -59,9 +71,20 @@ class EventVideo(models.Model):
         (SOURCE_YOUTUBE, "External video URL (YouTube / Reel)"),
         (SOURCE_UPLOAD, "Uploaded video"),
     ]
+    EDITION_PREVIOUS = "PREVIOUS"
+    EDITION_CURRENT = "CURRENT"
+    EDITION_PROMO = "PROMO"
+    EDITION_CHOICES = [
+        (EDITION_PREVIOUS, "Last year's party"),
+        (EDITION_CURRENT, "This year's party"),
+        (EDITION_PROMO, "Promo / teaser"),
+    ]
 
     title = models.CharField(max_length=160)
     source_type = models.CharField(max_length=10, choices=SOURCE_CHOICES, default=SOURCE_YOUTUBE)
+    edition = models.CharField(
+        max_length=8, choices=EDITION_CHOICES, default=EDITION_PROMO
+    )
     url = models.URLField(blank=True)
     video_file = models.FileField(upload_to="videos/", blank=True)
     sort_order = models.PositiveIntegerField(default=0)

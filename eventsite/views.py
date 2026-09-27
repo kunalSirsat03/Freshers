@@ -86,15 +86,26 @@ def _booked_count():
 
 def home(request):
     settings = _event_settings()
+    published_gallery = GalleryImage.objects.filter(is_published=True).exclude(
+        image="", image_url=""
+    )
     return render(
         request,
         "fresher_cinematic.html",
         {
             "event": settings,
-            "gallery": GalleryImage.objects.filter(is_published=True)
-            .exclude(image="", image_url="")
-            .order_by("-featured", "sort_order", "pk"),
-            "videos": EventVideo.objects.filter(is_published=True),
+            "gallery": published_gallery.filter(
+                collection=GalleryImage.COLLECTION_GENERAL
+            ).order_by("-featured", "sort_order", "pk"),
+            "archive_gallery": published_gallery.filter(
+                collection=GalleryImage.COLLECTION_PREVIOUS
+            ).order_by("-featured", "sort_order", "pk"),
+            "venue_gallery": published_gallery.filter(
+                collection=GalleryImage.COLLECTION_VENUE
+            ).order_by("-featured", "sort_order", "pk"),
+            "previous_videos": EventVideo.objects.filter(
+                is_published=True, edition=EventVideo.EDITION_PREVIOUS
+            ),
             "schedule": ScheduleItem.objects.filter(is_published=True),
             "rules": EventRule.objects.filter(is_published=True),
             "faqs": EventFAQ.objects.filter(is_published=True),
