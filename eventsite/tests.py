@@ -76,6 +76,18 @@ class RegistrationFlowTests(TestCase):
         self.assertContains(response, "11:00 AM to 6:00 PM")
         self.assertNotContains(response, "tickets remaining")
 
+    @override_settings(EVENT_REGISTRATION_URL="https://forms.gle/rT1QgLVCPCMPLYyv9")
+    def test_existing_event_row_receives_configured_google_form_url(self):
+        self.event.registration_url = ""
+        self.event.save(update_fields=("registration_url",))
+
+        response = self.client.get(reverse("home"))
+
+        self.event.refresh_from_db()
+        self.assertEqual(self.event.registration_url, "https://forms.gle/rT1QgLVCPCMPLYyv9")
+        self.assertContains(response, "https://forms.gle/rT1QgLVCPCMPLYyv9")
+        self.assertContains(response, "Register now")
+
     def test_public_home_omits_capacity(self):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)

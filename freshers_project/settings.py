@@ -7,9 +7,14 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = os.environ.get("DEBUG", os.environ.get("DJANGO_DEBUG", "False")).strip().lower() in {
+    "1", "true", "yes",
+}
+SECRET_KEY = os.environ.get("SECRET_KEY") or os.environ.get("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    if not DEBUG:
+        raise RuntimeError("Set SECRET_KEY or DJANGO_SECRET_KEY for production.")
+    SECRET_KEY = "local-development-only-insecure-key"
 
 ALLOWED_HOSTS = ["*"]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "")
@@ -100,7 +105,9 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = Path(os.environ.get("MEDIA_ROOT", BASE_DIR / "media"))
-EVENT_REGISTRATION_URL = os.environ.get("EVENT_REGISTRATION_URL", "")
+EVENT_REGISTRATION_URL = os.environ.get(
+    "EVENT_REGISTRATION_URL", "https://forms.gle/rT1QgLVCPCMPLYyv9"
+)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SECURE_SSL_REDIRECT = os.environ.get(
     "DJANGO_SECURE_SSL_REDIRECT", "False" if DEBUG else "True"

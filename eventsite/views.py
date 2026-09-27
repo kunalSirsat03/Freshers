@@ -38,10 +38,14 @@ from .models import (
 
 
 def _event_settings():
-    return EventSettings.objects.get_or_create(
+    event, _ = EventSettings.objects.get_or_create(
         pk=1,
         defaults={"registration_url": settings.EVENT_REGISTRATION_URL},
-    )[0]
+    )
+    if not event.registration_url and settings.EVENT_REGISTRATION_URL:
+        event.registration_url = settings.EVENT_REGISTRATION_URL
+        event.save(update_fields=("registration_url",))
+    return event
 
 
 def _send_confirmed_tickets(request, registration_id):
