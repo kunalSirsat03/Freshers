@@ -12,9 +12,10 @@
       <span></span><span></span>
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-      <a href="#experience">The night</a>
+      <a href="#experience">The party</a>
       <a href="#schedule">Schedule</a>
       <a href="#gallery">Gallery</a>
+      <a href="#shorts">Shorts</a>
       <a href="#faq">FAQs</a>
       {% if google_form_url %}
         <a class="button button-small" href="{{ google_form_url }}" target="_blank" rel="noopener noreferrer">Register now <span aria-hidden="true">↗</span></a>
@@ -32,7 +33,7 @@
       <div class="hero-copy">
         <p class="eyebrow"><span class="eyebrow-dot"></span> The class of '26, together at last</p>
         <h1 id="event-title">Make room<br>for <em>legendary.</em></h1>
-        <p class="hero-description">One night for new faces, old friends, loud music and the stories you'll still be telling next semester.</p>
+        <p class="hero-description">One full day for new faces, old friends, good music and the stories you'll still be telling next semester.</p>
         <div class="hero-facts" aria-label="Event information">
           <div class="hero-fact"><span class="fact-icon" aria-hidden="true">▦</span><span><strong>{{ event_date }}</strong><small>{{ event_time }}</small></span></div>
           <div class="hero-fact"><span class="fact-icon" aria-hidden="true">⌖</span><span><strong>{{ venue }}</strong><small>Good people. One dance floor.</small></span></div>
@@ -44,13 +45,16 @@
           {% else %}
             <a class="button button-primary" href="#registration-note">Register now <span aria-hidden="true">↗</span></a>
           {% endif %}
-          <a class="text-link" href="#experience">Get to know the night <span aria-hidden="true">↓</span></a>
+          <a class="text-link" href="#experience">Get to know the party <span aria-hidden="true">↓</span></a>
         </div>
+        {% if google_form_url %}
+          <button class="registration-followup" type="button" data-confirm-open>Already submitted the form? <span>View next steps</span></button>
+        {% endif %}
         {% if not google_form_url %}
           <p class="config-note" id="registration-note">Registration link coming soon.</p>
         {% endif %}
-        <div class="countdown" data-countdown="2026-10-10T18:00:00+05:30" aria-label="Countdown to the event">
-          <span class="countdown-label">The night begins in</span>
+        <div class="countdown" data-countdown="2026-10-10T11:00:00+05:30" aria-label="Countdown to the event">
+          <span class="countdown-label">The party begins in</span>
           <div class="countdown-units">
             <span><strong data-days>000</strong><small>days</small></span>
             <span><strong data-hours>00</strong><small>hours</small></span>
@@ -61,13 +65,13 @@
       </div>
       <div class="hero-art">
         <div class="poster-frame">
-          <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="A packed dance floor lit for a night of music" fetchpriority="high">
+          <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="A packed dance floor at a music event" fetchpriority="high">
           <div class="poster-wash"></div>
-          <div class="poster-topline"><span>ONE NIGHT ONLY</span><span>10.10.26</span></div>
-          <div class="poster-title"><span>UNOFFICIAL</span><strong>FRESHERS</strong><span>YOUR NIGHT STARTS HERE</span></div>
+          <div class="poster-topline"><span>ONE DAY TOGETHER</span><span>10.10.26</span></div>
+          <div class="poster-title"><span>UNOFFICIAL</span><strong>FRESHERS</strong><span>YOUR DAY STARTS HERE</span></div>
           <div class="poster-bottom"><span>BONVIVANT</span><span>EST. 2026</span></div>
         </div>
-        <span class="hero-stamp" aria-hidden="true">A night<br>to remember</span>
+        <span class="hero-stamp" aria-hidden="true">A day<br>to remember</span>
       </div>
     </div>
     <div class="hero-bottom page-width"><span>01 / 05</span><span>Scroll for the good stuff</span><span class="scroll-line" aria-hidden="true"></span></div>
@@ -76,23 +80,23 @@
   <section class="experience section-pad" id="experience">
     <div class="page-width">
       <div class="section-intro">
-        <p class="eyebrow">Not just another party</p>
+        <p class="eyebrow">A day to make your own</p>
         <h2>Show up as strangers.<br><em>Leave as the story.</em></h2>
-        <p class="section-copy">A proper welcome to the year ahead: a little ceremony, a lot of music, and a room full of people you'll be glad you met.</p>
+        <p class="section-copy">A proper welcome to the year ahead: a little ceremony, good music, and a room full of people you'll be glad you met.</p>
       </div>
       <div class="experience-grid">
         <article class="experience-item experience-featured">
           <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="DJ performing beneath vivid stage lights" loading="lazy">
           <span class="image-index">01</span>
-          <div><span class="item-kicker">Find your rhythm</span><h3>Lights down.<br>Volume up.</h3></div>
+          <div><span class="item-kicker">Find your rhythm</span><h3>Music on.<br>Day wide open.</h3></div>
         </article>
         <article class="experience-item">
           <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="A beautifully set dinner table ready for guests" loading="lazy">
           <span class="image-index">02</span>
-          <div><span class="item-kicker">Good things, served</span><h3>Save a little<br>room for dinner.</h3></div>
+          <div><span class="item-kicker">Good things, served</span><h3>Save a little<br>room for lunch.</h3></div>
         </article>
         <article class="experience-item experience-short">
-          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Friends celebrating together at an evening event" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Friends celebrating together at an event" loading="lazy">
           <span class="image-index">03</span>
           <div><span class="item-kicker">Your people are here</span><h3>Make the<br>first memory.</h3></div>
         </article>
@@ -105,8 +109,8 @@
     <div class="page-width schedule-layout">
       <div class="schedule-heading">
         <p class="eyebrow">A little preview</p>
-        <h2>Here's how<br>the night <em>unfolds.</em></h2>
-        <p>Times are a guide. The best parts tend to happen in between.</p>
+        <h2>Here's how<br>the day <em>unfolds.</em></h2>
+        <p>From the first hello at 11 to the last group photo at 6.</p>
         <span class="schedule-mark" aria-hidden="true">UF<br>26</span>
       </div>
       <ol class="schedule-list">
@@ -121,9 +125,20 @@
     </div>
   </section>
 
+  <section class="shorts-section section-pad" id="shorts">
+    <div class="page-width">
+      <div class="gallery-heading"><div><p class="eyebrow">A little preview</p><h2>Watch the<br><em>moments.</em></h2></div><span>Three clips from the freshers feed.</span></div>
+      <div class="shorts-grid">
+        <iframe src="https://www.youtube-nocookie.com/embed/in6gm1NFqow" title="Freshers short video 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/Ay5_obp5Zgo" title="Freshers short video 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/1pM_pVoYIUE" title="Freshers short video 3" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
   <section class="gallery-section section-pad" id="gallery">
     <div class="page-width">
-      <div class="gallery-heading"><div><p class="eyebrow">The feeling of it</p><h2>Good nights<br>look like <em>this.</em></h2></div><span>Lights. Laughter. One more song.</span></div>
+      <div class="gallery-heading"><div><p class="eyebrow">The feeling of it</p><h2>Good memories<br>look like <em>this.</em></h2></div><span>Music. Laughter. All together.</span></div>
       <div class="gallery-strip">
         <figure><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Crowd enjoying an outdoor live music event" loading="lazy"><figcaption>THE ARRIVAL</figcaption></figure>
         <figure><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Festival crowd with hands raised toward the stage" loading="lazy"><figcaption>THE MOMENT</figcaption></figure>
@@ -148,7 +163,7 @@
 
   <section class="closing-cta">
     <div class="closing-inner page-width">
-      <p class="eyebrow">Saturday · 10 October 2026 · Bonvivant</p>
+      <p class="eyebrow">Saturday · 10 October 2026 · 11 AM - 6 PM · Bonvivant</p>
       <h2>Be there for<br><em>the beginning.</em></h2>
       <p>₹{{ ticket_price }} per person</p>
       {% if google_form_url %}
@@ -157,18 +172,37 @@
         <a class="button button-light" href="#registration-note">Register now <span aria-hidden="true">↗</span></a>
         <p class="closing-note">Registration link coming soon.</p>
       {% endif %}
+      {% if google_form_url %}
+        <button class="closing-followup" type="button" data-confirm-open>Already submitted? View next steps</button>
+      {% endif %}
       <span class="closing-mark" aria-hidden="true">UF</span>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
-  <div class="page-width footer-inner">
-    <a class="wordmark footer-wordmark" href="#top"><span class="wordmark-mark">UF<span>'26</span></span><span class="wordmark-name">Unofficial<br>Freshers</span></a>
-    <p>One night. A whole new chapter.</p>
-    <div class="footer-meta"><span>10 OCT 2026</span><span>BONVIVANT</span>{% if event_contact_email %}<a href="mailto:{{ event_contact_email }}">CONTACT</a>{% endif %}</div>
+  <div class="page-width footer-grid">
+    <div class="footer-brand">
+      <a class="wordmark footer-wordmark" href="#top"><span class="wordmark-mark">UF<span>'26</span></span><span class="wordmark-name">Unofficial<br>Freshers</span></a>
+      <p>A full day to meet your people and start the year together.</p>
+    </div>
+    <div class="footer-event"><h2>Event</h2><p>Saturday, 10 October 2026</p><p>11:00 AM - 6:00 PM</p><p>Bonvivant</p></div>
+    <div class="footer-contact"><h2>Website queries</h2><p>For website help or technical questions, contact:</p><a href="mailto:{{ event_contact_email|default:'kunal3work@gmail.com' }}">{{ event_contact_email|default:'kunal3work@gmail.com' }}</a></div>
   </div>
+  <div class="page-width footer-bottom"><span>Unofficial Freshers '26</span><a href="#top">Back to top ↑</a></div>
 </footer>
+
+{% if google_form_url %}
+  <dialog class="registration-dialog" data-confirm-dialog aria-labelledby="confirm-title">
+    <button class="dialog-close" type="button" data-confirm-close aria-label="Close">×</button>
+    <div class="ticket-animation" aria-hidden="true"><span>✓</span></div>
+    <p class="eyebrow">Form submitted?</p>
+    <h2 id="confirm-title">Your response is on its way.</h2>
+    <p>Thanks for completing the registration form. The organizers will verify your details and payment, then confirm your ticket through the contact details you provided.</p>
+    <p class="dialog-note">This website can't verify Google Form submissions or issue tickets automatically.</p>
+    <button class="button button-primary" type="button" data-confirm-close>Got it</button>
+  </dialog>
+{% endif %}
 
 {% if google_form_url %}
   <div class="mobile-register">

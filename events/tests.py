@@ -2,14 +2,21 @@ from django.test import TestCase, override_settings
 
 
 class HomePageTests(TestCase):
-    @override_settings(GOOGLE_FORM_URL="https://forms.google.com/example")
-    def test_registration_ctas_use_configured_form_without_public_counts(self):
+    @override_settings(GOOGLE_FORM_URL="https://forms.google.com/example", EVENT_CONTACT_EMAIL="kunal3work@gmail.com")
+    def test_registration_flow_and_event_details_render(self):
         response = self.client.get("/")
         page = response.content.decode()
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(page.count('href="https://forms.google.com/example"'), 4)
         self.assertEqual(page.count('target="_blank" rel="noopener noreferrer"'), 4)
+        self.assertIn("11:00 AM - 6:00 PM", page)
+        self.assertIn("Your response is on its way.", page)
+        self.assertIn("organizers will verify your details and payment", page)
+        self.assertIn('href="mailto:kunal3work@gmail.com"', page)
+        self.assertIn("youtube-nocookie.com/embed/in6gm1NFqow", page)
+        self.assertIn("youtube-nocookie.com/embed/Ay5_obp5Zgo", page)
+        self.assertIn("youtube-nocookie.com/embed/1pM_pVoYIUE", page)
         self.assertNotIn("120", page)
         self.assertNotIn("localStorage", page)
 

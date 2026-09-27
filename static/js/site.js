@@ -19,6 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const confirmationDialog = document.querySelector("[data-confirm-dialog]");
+  if (confirmationDialog) {
+    document.querySelectorAll("[data-confirm-open]").forEach((button) => {
+      button.addEventListener("click", () => confirmationDialog.showModal());
+    });
+    confirmationDialog.querySelectorAll("[data-confirm-close]").forEach((button) => {
+      button.addEventListener("click", () => confirmationDialog.close());
+    });
+    confirmationDialog.addEventListener("click", (event) => {
+      if (event.target === confirmationDialog) confirmationDialog.close();
+    });
+  }
+
   const countdown = document.querySelector("[data-countdown]");
   if (!countdown) return;
 

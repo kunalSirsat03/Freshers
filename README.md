@@ -12,7 +12,7 @@ A Django-rendered event information site. Registration and payment stay in the o
    pip install -r requirements.txt
    ```
 
-2. Copy `.env.example` to `.env` and set `GOOGLE_FORM_URL` to the real form URL. Export the values in that file in your shell before running Django; `.env` is intentionally not loaded by the app.
+2. Copy `.env.example` to `.env` if you need to override the default Google Form URL or website contact email. Export the values in that file in your shell before running Django; `.env` is intentionally not loaded by the app.
 
 3. Install the Tailwind CLI and build the stylesheet:
 
@@ -39,4 +39,4 @@ python manage.py collectstatic --noinput
 gunicorn config.wsgi:application
 ```
 
-Static files are served by WhiteNoise. The form URL is read once from Django settings and used by every registration CTA. No public attendee or capacity count is shown. If the Google Form itself does not enforce its response limit, organizers must close it manually at the agreed capacity.
+Static files are served by WhiteNoise. The form URL is read once from Django settings and used by every registration CTA. The post-form dialog is an informational handoff only: Google Forms does not notify this site of a submission, so organizers must verify responses and confirm tickets. No public attendee or capacity count is shown. If the Google Form itself does not enforce its response limit, organizers must close it manually at the agreed capacity.
