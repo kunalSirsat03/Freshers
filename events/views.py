@@ -3,13 +3,13 @@ from django.shortcuts import render
 
 
 SCHEDULE = [
-    ("11:00", "Doors open", "Meet your classmates, collect your welcome pack, and settle in."),
-    ("11:30", "Welcome and introductions", "A warm welcome to the new faces joining the year."),
-    ("12:30", "Freshers spotlight", "A little stage time for the people who make this day theirs."),
-    ("13:30", "Lunch is served", "Take a break and enjoy lunch together at The Cleio (Ekaa Rooftop)."),
-    ("15:00", "Games and good company", "Get to know your classmates with a few easygoing activities."),
-    ("16:00", "Music and dancing", "The DJ takes over for an afternoon on the dance floor."),
-    ("17:30", "One last group photo", "Wrap up the day with your new friends and a keepsake photo."),
+    ("11:00 - 11:30 AM", "Entry & Welcome", "Guest check-in, pass verification and seating."),
+    ("11:30 - 11:45 AM", "Opening & Introduction", "Welcome address, event introduction and committee introduction."),
+    ("11:45 AM - 1:15 PM", "Live Performances", "Dance performances, comedy acts, music and other stage acts."),
+    ("1:15 - 2:00 PM", "Games & Interactive Activities", "Fun games, audience interaction and challenges."),
+    ("2:00 - 2:45 PM", "Lunch Break", "Lunch served for all attendees at The Cleio (Ekaa Rooftop)."),
+    ("2:45 - 5:15 PM", "OPEN DANCE FLOOR", "DJ, music, dancing and free interaction."),
+    ("5:15 - 5:30 PM", "Closing & Thank You", "Final announcements, acknowledgements and event wrap-up."),
 ]
 
 FAQS = [
