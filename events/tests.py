@@ -9,7 +9,9 @@ class HomePageTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(page.count('href="https://forms.google.com/example"'), 4)
-        self.assertEqual(page.count('target="_blank" rel="noopener noreferrer"'), 4)
+        self.assertEqual(page.count('target="_blank" rel="noopener noreferrer"'), 6)
+        self.assertEqual(page.count('href="https://maps.app.goo.gl/mwoWJLKVdRmqZYJX8"'), 2)
+        self.assertIn("The Cleio (Ekaa Rooftop), Nashik", page)
         self.assertIn("11:00 AM - 6:00 PM", page)
         self.assertIn("Your response is on its way.", page)
         self.assertIn("organizers will verify your details and payment", page)

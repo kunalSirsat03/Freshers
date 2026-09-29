@@ -6,7 +6,7 @@ SCHEDULE = [
     ("11:00", "Doors open", "Meet your classmates, collect your welcome pack, and settle in."),
     ("11:30", "Welcome and introductions", "A warm welcome to the new faces joining the year."),
     ("12:30", "Freshers spotlight", "A little stage time for the people who make this day theirs."),
-    ("13:30", "Lunch is served", "Take a break and enjoy lunch together at Bonvivant."),
+    ("13:30", "Lunch is served", "Take a break and enjoy lunch together at The Cleio (Ekaa Rooftop)."),
     ("15:00", "Games and good company", "Get to know your classmates with a few easygoing activities."),
     ("16:00", "Music and dancing", "The DJ takes over for an afternoon on the dance floor."),
     ("17:30", "One last group photo", "Wrap up the day with your new friends and a keepsake photo."),
@@ -28,7 +28,8 @@ def home(request):
         {
             "event_date": "10 October 2026",
             "event_time": "11:00 AM - 6:00 PM",
-            "venue": "Bonvivant",
+            "venue": "The Cleio (Ekaa Rooftop), Nashik",
+            "venue_map_url": "https://maps.app.goo.gl/mwoWJLKVdRmqZYJX8",
             "ticket_price": 750,
             "schedule": SCHEDULE,
             "faqs": FAQS,

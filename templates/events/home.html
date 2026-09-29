@@ -36,7 +36,7 @@
         <p class="hero-description">One full day for new faces, old friends, good music and the stories you'll still be telling next semester.</p>
         <div class="hero-facts" aria-label="Event information">
           <div class="hero-fact"><span class="fact-icon" aria-hidden="true">▦</span><span><strong>{{ event_date }}</strong><small>{{ event_time }}</small></span></div>
-          <div class="hero-fact"><span class="fact-icon" aria-hidden="true">⌖</span><span><strong>{{ venue }}</strong><small>Good people. One dance floor.</small></span></div>
+          <div class="hero-fact"><span class="fact-icon" aria-hidden="true">⌖</span><span><strong><a href="{{ venue_map_url }}" target="_blank" rel="noopener noreferrer">{{ venue }}</a></strong><small>Good people. One dance floor.</small></span></div>
           <div class="hero-fact"><span class="fact-icon price-icon" aria-hidden="true">₹</span><span><strong>₹{{ ticket_price }}</strong><small>per person</small></span></div>
         </div>
         <div class="hero-actions" id="registration">
@@ -65,11 +65,11 @@
       </div>
       <div class="hero-art">
         <div class="poster-frame">
-          <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="A packed dance floor at a music event" fetchpriority="high">
+          <img src="{% static 'images/WhatsApp Image 2026-09-29 at 7.56.58 PM (1).jpeg' %}" alt="Venue interior at The Cleio (Ekaa Rooftop) in Nashik" fetchpriority="high">
           <div class="poster-wash"></div>
           <div class="poster-topline"><span>ONE DAY TOGETHER</span><span>10.10.26</span></div>
           <div class="poster-title"><span>UNOFFICIAL</span><strong>FRESHERS</strong><span>YOUR DAY STARTS HERE</span></div>
-          <div class="poster-bottom"><span>BONVIVANT</span><span>EST. 2026</span></div>
+          <div class="poster-bottom"><span>EKAA NASHIK</span><span>EST. 2026</span></div>
         </div>
         <span class="hero-stamp" aria-hidden="true">A day<br>to remember</span>
       </div>
@@ -91,7 +91,7 @@
           <div><span class="item-kicker">Find your rhythm</span><h3>Music on.<br>Day wide open.</h3></div>
         </article>
         <article class="experience-item">
-          <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="A beautifully set dinner table ready for guests" loading="lazy">
+          <img src="{% static 'images/WhatsApp Image 2026-09-29 at 7.56.59 PM (1).jpeg' %}" alt="Dining area at The Cleio (Ekaa Rooftop) in Nashik" loading="lazy">
           <span class="image-index">02</span>
           <div><span class="item-kicker">Good things, served</span><h3>Save a little<br>room for lunch.</h3></div>
         </article>
@@ -140,8 +140,8 @@
     <div class="page-width">
       <div class="gallery-heading"><div><p class="eyebrow">The feeling of it</p><h2>Good memories<br>look like <em>this.</em></h2></div><span>Music. Laughter. All together.</span></div>
       <div class="gallery-strip">
-        <figure><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Crowd enjoying an outdoor live music event" loading="lazy"><figcaption>THE ARRIVAL</figcaption></figure>
-        <figure><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Festival crowd with hands raised toward the stage" loading="lazy"><figcaption>THE MOMENT</figcaption></figure>
+        <figure><img src="{% static 'images/WhatsApp Image 2026-09-29 at 7.56.59 PM.jpeg' %}" alt="Interior of The Cleio (Ekaa Rooftop) in Nashik" loading="lazy"><figcaption>THE VENUE</figcaption></figure>
+        <figure><img src="{% static 'images/WhatsApp Image 2026-09-29 at 7.57.00 PM.jpeg' %}" alt="Dining space at The Cleio (Ekaa Rooftop) in Nashik" loading="lazy"><figcaption>THE SETTING</figcaption></figure>
         <figure><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Friends dancing together at a concert" loading="lazy"><figcaption>THE AFTERGLOW</figcaption></figure>
       </div>
     </div>
@@ -163,7 +163,7 @@
 
   <section class="closing-cta">
     <div class="closing-inner page-width">
-      <p class="eyebrow">Saturday · 10 October 2026 · 11 AM - 6 PM · Bonvivant</p>
+      <p class="eyebrow">Saturday · 10 October 2026 · 11 AM - 6 PM · {{ venue }}</p>
       <h2>Be there for<br><em>the beginning.</em></h2>
       <p>₹{{ ticket_price }} per person</p>
       {% if google_form_url %}
@@ -186,7 +186,7 @@
       <a class="wordmark footer-wordmark" href="#top"><span class="wordmark-mark">UF<span>'26</span></span><span class="wordmark-name">Unofficial<br>Freshers</span></a>
       <p>A full day to meet your people and start the year together.</p>
     </div>
-    <div class="footer-event"><h2>Event</h2><p>Saturday, 10 October 2026</p><p>11:00 AM - 6:00 PM</p><p>Bonvivant</p></div>
+    <div class="footer-event"><h2>Event</h2><p>Saturday, 10 October 2026</p><p>11:00 AM - 6:00 PM</p><p><a href="{{ venue_map_url }}" target="_blank" rel="noopener noreferrer">{{ venue }}</a></p></div>
     <div class="footer-contact"><h2>Website queries</h2><p>For website help or technical questions, contact:</p><a href="mailto:{{ event_contact_email|default:'kunal3work@gmail.com' }}">{{ event_contact_email|default:'kunal3work@gmail.com' }}</a></div>
   </div>
   <div class="page-width footer-bottom"><span>Unofficial Freshers '26</span><a href="#top">Back to top ↑</a></div>
